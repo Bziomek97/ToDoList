@@ -1,6 +1,5 @@
 package com.example.ziomek.todolist;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ziomek.todolist.TaskList.Singleton;
+import com.example.ziomek.todolist.TaskList.Repository;
 
 import java.util.Objects;
 
@@ -95,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
             toast.show();
         }
         else{
-            Singleton.getInstance().add(result);
+            Repository.getInstance().add(result);
             onBackPressed();
         }
     }

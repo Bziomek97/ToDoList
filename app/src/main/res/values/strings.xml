@@ -4,4 +4,6 @@
     <string name="remove">remove</string>
     <string name="confirm">confirm</string>
     <string name="addTheme">Treść Zadania</string>
+    <string name="undone">Zadanie niezakończone</string>
+    <string name="done">Zadanie zakończone</string>
 </resources>
