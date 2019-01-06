@@ -3,4 +3,5 @@
     <string name="add">add</string>
     <string name="remove">remove</string>
     <string name="confirm">confirm</string>
+    <string name="addTheme">Treść Zadania</string>
 </resources>
