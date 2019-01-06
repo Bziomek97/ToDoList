@@ -20,10 +20,8 @@ import java.util.List;
 public class TaskAdapter extends BaseAdapter implements ListAdapter {
 
     private Context context;
-    private List<Task> content;
 
-    public TaskAdapter(List<Task> tasks, Context context){
-        content=tasks;
+    public TaskAdapter(Context context){
         this.context=context;
     }
 
@@ -31,12 +29,12 @@ public class TaskAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return content.size();
+        return Repository.getInstance().getAll().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return content.get(position);
+        return Repository.getInstance().getAll().get(position);
     }
 
     @Override
@@ -53,25 +51,35 @@ public class TaskAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView txt = (TextView) view.findViewById(R.id.taskContent);
-        txt.setText(content.get(position).getContent());
+        txt.setText(Repository.getInstance().getAll().get(position).getContent());
 
         final ImageButton stateButton = (ImageButton) view.findViewById(R.id.stateButton);
-        stateButton.setBackgroundColor(Color.rgb(144,238,144));
-        stateButton.setImageResource(R.drawable.done);
-        stateButton.performClick();
+        if(Repository.getInstance().getAll().get(position).isState()){
+            stateButton.setBackgroundColor(Color.rgb(144,238,144));
+            stateButton.setImageResource(R.drawable.done);
+        }
+        else{
+            stateButton.setBackgroundColor(Color.rgb(255,204,203));
+            stateButton.setImageResource(R.drawable.undone);
+        }
 
         stateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(content.get(position).isState()){
+                if(Repository.getInstance().getAll().get(position).isState()){
+                    Repository.getInstance().getAll().get(position).setState(false);
+                }
+                else{
+                    Repository.getInstance().getAll().get(position).setState(true);
+                }
+
+                if(Repository.getInstance().getAll().get(position).isState()){
                     stateButton.setBackgroundColor(Color.rgb(144,238,144));
                     stateButton.setImageResource(R.drawable.done);
-                    content.get(position).setState(false);
                 }
                 else{
                     stateButton.setBackgroundColor(Color.rgb(255,204,203));
                     stateButton.setImageResource(R.drawable.undone);
-                    content.get(position).setState(true);
                 }
             }
         });

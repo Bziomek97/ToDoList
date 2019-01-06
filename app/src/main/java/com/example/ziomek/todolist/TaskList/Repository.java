@@ -30,10 +30,6 @@ public class Repository {
         return this.tasksList;
     }
 
-    public Task getItem(int index){
-        return this.tasksList.get(index);
-    }
-
     public ArrayList<String> getTasks(){
         ArrayList<String> tmp = new ArrayList<>();
 

@@ -31,7 +31,7 @@ public class StartActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.taskList);
         taskList = new ArrayList<String>();
-        adapter = new TaskAdapter(Repository.getInstance().getAll(),this);
+        adapter = new TaskAdapter(this);
         lv.setAdapter(adapter);
     }
 
@@ -39,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         lv.setAdapter(null);
-        adapter = new TaskAdapter(Repository.getInstance().getAll(),this);
+        adapter = new TaskAdapter(this);
         lv.setAdapter(adapter);
     }
 
