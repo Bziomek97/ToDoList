@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.ziomek.todolist.TaskList.Repository;
 import com.example.ziomek.todolist.TaskList.Task;
+import com.example.ziomek.todolist.TaskList.TaskAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 public class StartActivity extends AppCompatActivity {
 
     private ListView lv;
-    private ArrayAdapter<String> adapter;
+    private TaskAdapter adapter;
     private ArrayList<String> taskList;
 
     @Override
@@ -30,15 +31,15 @@ public class StartActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.taskList);
         taskList = new ArrayList<String>();
-        adapter = new ArrayAdapter<>(this,R.layout.row,R.id.row,taskList);
+        adapter = new TaskAdapter(Repository.getInstance().getAll(),this);
         lv.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.clear();
-        if(Repository.getInstance().getSize() > 0) adapter.addAll(Repository.getInstance().getTasks());
+        lv.setAdapter(null);
+        adapter = new TaskAdapter(Repository.getInstance().getAll(),this);
         lv.setAdapter(adapter);
     }
 

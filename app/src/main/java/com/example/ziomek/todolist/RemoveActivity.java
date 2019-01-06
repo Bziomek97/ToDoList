@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +35,16 @@ public class RemoveActivity extends AppCompatActivity {
         taskList = new ArrayList<String>();
         adapter = new ArrayAdapter<>(this,R.layout.row,R.id.row,taskList);
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Repository.getInstance().remove((String) parent.getItemAtPosition(position));
+                adapter.clear();
+                if(Repository.getInstance().getSize() > 0) adapter.addAll(Repository.getInstance().getTasks());
+                lv.setAdapter(adapter);
+            }
+        });
     }
 
     @Override
@@ -44,34 +56,9 @@ public class RemoveActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_remove_toolbar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.confirm:
-                this.confirm();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
-    public void confirm(){
-        Context con = getApplicationContext();
-        CharSequence text = "Yey ur confirmed this";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(con,text,duration);
-        toast.show();
-    }
 }
