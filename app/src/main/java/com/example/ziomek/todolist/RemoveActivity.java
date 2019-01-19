@@ -1,6 +1,8 @@
 package com.example.ziomek.todolist;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
@@ -38,11 +40,27 @@ public class RemoveActivity extends AppCompatActivity {
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Repository.getInstance().remove((String) parent.getItemAtPosition(position));
+            public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
+                /*Repository.getInstance().remove((String) parent.getItemAtPosition(position));
                 adapter.clear();
                 if(Repository.getInstance().getSize() > 0) adapter.addAll(Repository.getInstance().getTasks());
-                lv.setAdapter(adapter);
+                lv.setAdapter(adapter);*/
+                new AlertDialog.Builder(RemoveActivity.this)
+
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage("Are You Sure You Want to Delete This Task?!")
+                        .setTitle("Attempt to Delete Task")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Repository.getInstance().remove((String) parent.getItemAtPosition(position));
+                                adapter.clear();
+                                if(Repository.getInstance().getSize() > 0) adapter.addAll(Repository.getInstance().getTasks());
+                                lv.setAdapter(adapter);
+                            }
+                        })
+                        .setNegativeButton("NO", null)
+                        .show();
             }
         });
     }
