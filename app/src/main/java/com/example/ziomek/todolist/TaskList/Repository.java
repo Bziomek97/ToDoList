@@ -3,12 +3,13 @@ package com.example.ziomek.todolist.TaskList;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Repository {
 
     private static Repository instance = null;
 
-    private ArrayList<Task> tasksList = null;
+    private List<Task> tasksList = null;
 
     private Repository() {
         this.tasksList = new ArrayList<>();
@@ -25,12 +26,8 @@ public class Repository {
         this.tasksList.add(newTask);
     }
 
-    public ArrayList<Task> getAll(){
+    public List<Task> getAll(){
         return this.tasksList;
-    }
-
-    public Task getItem(int index){
-        return this.tasksList.get(index);
     }
 
     public ArrayList<String> getTasks(){
@@ -44,5 +41,14 @@ public class Repository {
 
     public int getSize(){
         return this.tasksList.size();
+    }
+
+    public void remove(String name){
+        for(int i=0;i<this.tasksList.size();i++){
+            if(this.tasksList.get(i).getContent().equals(name)){
+                this.tasksList.set(i,null);
+                this.tasksList.remove(i);
+            }
+        }
     }
 }
