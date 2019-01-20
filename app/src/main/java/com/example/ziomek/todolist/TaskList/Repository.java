@@ -23,7 +23,8 @@ public class Repository {
     public void add(String content){
         Task newTask = new Task();
         newTask.setContent(content);
-        this.tasksList.add(newTask);
+        if(content.length()<255) this.tasksList.add(newTask);
+
     }
 
     public List<Task> getAll(){

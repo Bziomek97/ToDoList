@@ -13,6 +13,7 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +23,13 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
@@ -40,36 +43,48 @@ public class StartActivityTest {
 
     @Test
     public void startActivityTest() {
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.add), withContentDescription("add"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                0),
-                        isDisplayed()));
-        actionMenuItemView.perform(click());
+            ViewInteraction actionMenuItemView = onView(
+                    allOf(withId(R.id.add), withContentDescription("add"),
+                            childAtPosition(
+                                    childAtPosition(
+                                            withId(R.id.action_bar),
+                                            1),
+                                    0),
+                            isDisplayed()));
+            actionMenuItemView.perform(click());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.taskContent),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout),
-                                        childAtPosition(
-                                                withClassName(is("android.support.constraint.ConstraintLayout")),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatEditText2.perform(replaceText("Fajnie"), closeSoftKeyboard());
+            ViewInteraction appCompatEditText = onView(
+                    allOf(withId(R.id.taskContent),
+                            childAtPosition(
+                                    allOf(withId(R.id.linearLayout),
+                                            childAtPosition(
+                                                    withClassName(is("android.support.constraint.ConstraintLayout")),
+                                                    0)),
+                                    1),
+                            isDisplayed()));
+            appCompatEditText.perform(click());
 
-        ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.confirm), withContentDescription("confirm"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        2),
-                                0),
-                        isDisplayed()));
-        actionMenuItemView2.perform(click());
+            ViewInteraction appCompatEditText2 = onView(
+                    allOf(withId(R.id.taskContent),
+                            childAtPosition(
+                                    allOf(withId(R.id.linearLayout),
+                                            childAtPosition(
+                                                    withClassName(is("android.support.constraint.ConstraintLayout")),
+                                                    0)),
+                                    1),
+                            isDisplayed()));
+            appCompatEditText2.perform(replaceText("A"), closeSoftKeyboard());
+
+            ViewInteraction actionMenuItemView2 = onView(
+                    allOf(withId(R.id.confirm), withContentDescription("confirm"),
+                            childAtPosition(
+                                    childAtPosition(
+                                            withId(R.id.action_bar),
+                                            2),
+                                    0),
+                            isDisplayed()));
+            actionMenuItemView2.perform(click());
+
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.stateButton),
@@ -86,6 +101,7 @@ public class StartActivityTest {
                                 0),
                         isDisplayed()));
         appCompatImageButton2.perform(click());
+
 
         ViewInteraction actionMenuItemView3 = onView(
                 allOf(withId(R.id.remove), withContentDescription("remove"),
@@ -104,6 +120,15 @@ public class StartActivityTest {
                                 0)))
                 .atPosition(0);
         constraintLayout.perform(click());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(android.R.id.button1), withText("YES"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        appCompatButton.perform(scrollTo(), click());
 
         ViewInteraction appCompatImageButton3 = onView(
                 allOf(withContentDescription("Przejdź wyżej"),
